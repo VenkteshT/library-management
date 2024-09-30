@@ -1,0 +1,8 @@
+.suggestions .suggestions-item:hover {
+  cursor: pointer;
+  background-color: #fafafa;
+}
+
+.clear:hover {
+  cursor: pointer;
+}
