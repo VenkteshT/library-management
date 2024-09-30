@@ -82,7 +82,7 @@ const BooksList = () => {
       const enhancedBooks = fetchedBooks.map((book) => ({
         ...book,
         availability: Math.random() > 0.3,
-        copies: 10,
+        copies: Math.floor(Math.random() * 5) + 1,
       }));
 
       handleUpdateBooks(enhancedBooks);
