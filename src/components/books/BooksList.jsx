@@ -9,7 +9,6 @@ import { CartContext } from "../../contexts/CartContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksContext.jsx";
-import { query } from "firebase/firestore";
 const BooksList = () => {
   const { addToCart, cart, removeFromCart } = useContext(CartContext);
   const { books, handleUpdateBooks } = useContext(BooksContext);

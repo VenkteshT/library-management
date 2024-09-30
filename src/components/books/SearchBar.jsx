@@ -20,7 +20,7 @@ export default function SearchBar({ onSearch, clearResults }) {
     };
   }
 
-  // ------------- api having an issue with query params so implementing manual filter ---------
+  // ------------- api having an issue with query params so implementing manual search functionality ---------
 
   // const getSuggestions = async (query) => {
   //   if (!query) {
