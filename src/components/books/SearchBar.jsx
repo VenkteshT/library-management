@@ -51,9 +51,9 @@ export default function SearchBar({ onSearch, clearResults }) {
 
   // -----------------------------------------------------------------------------------------
 
-  useEffect(() => {
-    getSuggestions(searchTerm);
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   getSuggestions(searchTerm);
+  // }, [searchTerm]);
 
   const getSuggestions = (query) => {
     if (!query) {
@@ -69,15 +69,21 @@ export default function SearchBar({ onSearch, clearResults }) {
   };
 
   const handleSelectSuggestion = (suggestion) => {
-    setSearchTerm(suggestion.title);
     setSuggestions([]);
     onSearch(suggestion.title);
+    setSearchTerm(suggestion.title);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch(searchTerm);
     setSuggestions([]);
+  };
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    getSuggestions(value);
+    setSearchTerm(value);
   };
   return (
     <Form onSubmit={handleSubmit} className="position-relative">
@@ -86,7 +92,7 @@ export default function SearchBar({ onSearch, clearResults }) {
           type="text"
           placeholder="Search books by title, author, genre..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleChange}
           required
         />
         {searchTerm && (
