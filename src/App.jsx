@@ -10,6 +10,8 @@ import Cart from "./components/Cart/Cart.jsx";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import Signup from "./components/Auth/SignUp.jsx";
 import { CartContext } from "./contexts/CartContext.jsx";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Loading from "./components/Common/Loading.jsx";
 function App() {
   const { currentUser, setUser } = useContext(AuthContext);
@@ -21,6 +23,7 @@ function App() {
     if (!currentUser) navigate("/login");
   }, [currentUser]);
 
+  useEffect(() => {}, []);
   const handleSignOut = () => {
     setLoading(true);
     signOut(auth)
@@ -33,10 +36,12 @@ function App() {
       })
       .finally(() => {
         setLoading(false);
+        toast("Logout Succesfully", { type: "success", autoClose: 1100 });
       });
   };
   return (
     <div className="px-2">
+      <ToastContainer />
       {loading && (
         <div className="loader">
           <Loading />

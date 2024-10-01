@@ -3,6 +3,7 @@ import { CartContext } from "../../contexts/CartContext.jsx";
 import { ListGroup, Button } from "react-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
@@ -23,7 +24,7 @@ const Cart = () => {
       }
     });
     clearCart();
-    alert("Checkout successful!");
+    toast("Checkout successful!", { type: "info", autoClose: 1100 });
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Form, Button, Alert, Container } from "react-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { auth as firebaseAuth, provider } from "../../services/firebase.js";
+import { toast } from "react-toastify";
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -18,6 +19,13 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const notify = () => {
+    toast(`Login Succesfull`, {
+      type: "success",
+      autoClose: 1100,
+    });
+  };
   const handleEmailLogin = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -27,6 +35,7 @@ export default function Login() {
         setUser({
           email,
         });
+        notify();
         navigate("/");
       })
       .catch((err) => {
@@ -42,6 +51,8 @@ export default function Login() {
       .then((res) => {
         setUser(res.user);
         navigate("/");
+
+        notify();
       })
       .catch((err) => {
         setError(err.message);
