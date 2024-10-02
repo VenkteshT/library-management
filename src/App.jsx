@@ -47,8 +47,8 @@ function App() {
           <Loading />
         </div>
       )}
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand as={Link} to="/">
+      <Navbar bg="light" id="navbar" expand="lg">
+        <Navbar.Brand as={Link} to="/" className="ms-2">
           Library Management
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -58,18 +58,27 @@ function App() {
               Books
             </Nav.Link>
             <Nav.Link as={Link} to="/cart" style={{ position: "relative" }}>
-              Cart {currentUser && <span className="count">{cart.length}</span>}
+              Cart{" "}
+              {currentUser && cart.length ? (
+                <div id="cart-count" className="rounded-circle bg-success">
+                  {cart.length}
+                </div>
+              ) : (
+                <></>
+              )}
             </Nav.Link>
           </Nav>
           <Nav className="ms-4">
             {currentUser ? (
-              <Nav.Link onClick={handleSignOut}>Logout</Nav.Link>
+              <Nav.Link onClick={handleSignOut} className="fw-bold">
+                Logout
+              </Nav.Link>
             ) : (
               <>
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link as={Link} to="/login" className="fw-bold">
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/signup">
+                <Nav.Link as={Link} to="/signup" className="fw-bold">
                   Signup
                 </Nav.Link>
               </>

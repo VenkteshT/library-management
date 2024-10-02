@@ -1,0 +1,10 @@
+.filter-btn {
+  position: relative;
+  top: 15px;
+}
+
+@media (max-width: 769px) {
+  .filter-btn {
+    top: 10px;
+  }
+}

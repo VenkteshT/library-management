@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
+import "./filters.css";
+const Filters = ({ filters, setFilters, applyFilter, clearFilter }) => {
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
-const Filters = ({ filters, setFilters }) => {
+  const [isFiltersEmtpy, setIsFiltersEmpty] = useState(true);
+
   const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    setFilters((p) => ({ ...p, [e.target.name]: e.target.value }));
   };
+
+  const handleClick = (e) => {
+    const { name } = e.target;
+
+    if (name === "apply") {
+      setIsFilterApplied(true);
+      applyFilter();
+    } else {
+      setIsFilterApplied(false);
+      clearFilter();
+    }
+  };
+
+  useEffect(() => {
+    let isEmpty = Object.entries(filters).every(([key, value]) => {
+      if (key !== "sortBy" && key !== "sortOrder") return !value;
+      return true;
+    });
+    setIsFiltersEmpty(isEmpty);
+  }, [filters]);
 
   return (
     <div className="container mt-4">
-      <Form className="mb-4">
+      <Form className="mb-4" onSubmit={(e) => e.preventDefault()}>
         <Row>
           <Col md={3}>
             <Form.Group controlId="filterTitle">
@@ -58,8 +82,31 @@ const Filters = ({ filters, setFilters }) => {
               />
             </Form.Group>
           </Col>
+          <Col md={3}>
+            <div className="btns">
+              <button
+                disabled={isFiltersEmtpy}
+                className="btn btn-primary filter-btn"
+                onClick={handleClick}
+                name="apply"
+              >
+                Apply
+              </button>
+              {isFilterApplied ? (
+                <button
+                  className="btn btn-danger filter-btn ms-2"
+                  onClick={handleClick}
+                  name="clear"
+                >
+                  Clear
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
+          </Col>
         </Row>
-        <Row className="mt-3">
+        <Row className="mt-4">
           <Col md={3}>
             <Form.Group controlId="sortBy">
               <Form.Label>Sort By</Form.Label>

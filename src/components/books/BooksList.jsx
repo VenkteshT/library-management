@@ -33,6 +33,16 @@ const BooksList = () => {
     if (!currentUser) navigate("/login");
   }, [currentUser]);
 
+  const resetFilter = () => {
+    setFilters({
+      title: "",
+      author: "",
+      genre: "",
+      publication_year: "",
+      sortBy: "",
+      sortOrder: "asc",
+    });
+  };
   const loadBooks = async () => {
     try {
       const data = await fetchBooks("");
@@ -123,13 +133,38 @@ const BooksList = () => {
     );
   }, [search]);
 
-  useEffect(() => {
+  const applyFilter = () => {
     loadBooks();
+  };
+
+  const clearFilter = () => {
+    resetFilter();
+  };
+
+  useEffect(() => {
+    let isEmpty = Object.entries(filters).every(([key, value]) => {
+      if (key !== "sortBy" && key !== "sortOrder") return !value;
+      return true;
+    });
+
+    if (isEmpty) {
+      loadBooks();
+    }
   }, [filters]);
+
   return (
     <Container>
-      <SearchBar onSearch={handleSearch} clearResults={clearResults} />
-      <Filters filters={filters} setFilters={setFilters} />
+      <SearchBar
+        onSearch={handleSearch}
+        clearResults={clearResults}
+        clearFilter={clearFilter}
+      />
+      <Filters
+        filters={filters}
+        setFilters={setFilters}
+        applyFilter={applyFilter}
+        clearFilter={clearFilter}
+      />
       <div className="mb-2 mt-4">
         <h5>Total Books Found: {allBooks.length}</h5>
       </div>
@@ -146,20 +181,26 @@ const BooksList = () => {
             const isAdded = bookInCart(book.id);
             return (
               <Col key={book.id} sm={12} md={6} lg={4} className="mb-4">
-                <Card>
+                <Card className="shadow-sm">
                   <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      {book.author}
-                    </Card.Subtitle>
-                    <Card.Text>
-                      Subject: {book.description || "N/A"}
+                    <div className="bg-success text-white p-2 rounded">
+                      <Card.Title className="text-truncate">
+                        {book.title}
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {book.author}
+                      </Card.Subtitle>
+                    </div>
+                    <Card.Text className="mt-4 ps-1">
+                      <span className="text-muted">Subject:&nbsp;</span>
+                      {book.description || "N/A"}
                       <br />
-                      Published: {book.publication_year || "N/A"}
+                      <span className="text-muted">Published:&nbsp;</span>{" "}
+                      {book.publication_year || "N/A"}
                       <br />
                       <Card.Text>
-                        <Card.Text>
-                          Genre:
+                        <Card.Text className="m-0">
+                          <span className="text-muted">Genre:&nbsp;</span>
                           {book?.genre.map((el, i, arr) => {
                             return (
                               <span key={i}>
@@ -168,10 +209,11 @@ const BooksList = () => {
                             );
                           })}
                         </Card.Text>
-                        Availability:{" "}
+                        <span className="text-muted">Availability:&nbsp;</span>
                         {book.availability ? "Available" : "Unavailable"}
                         <br />
-                        Copies: {book.copies}
+                        <span className="text-muted">Copies:&nbsp;</span>
+                        {book.copies}
                       </Card.Text>
                     </Card.Text>
                     {/* Add buttons for adding to cart, etc. */}

@@ -86,7 +86,7 @@ export default function SearchBar({ onSearch, clearResults }) {
     setSearchTerm(value);
   };
   return (
-    <Form onSubmit={handleSubmit} className="position-relative">
+    <Form onSubmit={handleSubmit} className="position-relative shadow-sm">
       <div className="input-group">
         <Form.Control
           type="text"

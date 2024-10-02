@@ -1,9 +1,8 @@
-.count {
+#cart-count {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
   background-color: blue;
   color: white;
@@ -12,6 +11,7 @@
   top: 0px;
   left: 35px;
   font-weight: 500;
+  border: none;
 }
 
 .loader {
@@ -22,4 +22,11 @@
   width: 100%;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+#navbar {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
 }
