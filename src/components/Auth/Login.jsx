@@ -66,7 +66,7 @@ export default function Login() {
     if (currentUser) navigate("/");
   }, [currentUser]);
   return (
-    <div className="container-sm" id="login-container">
+    <div className="container-sm border shadow-sm" id="login-container">
       {loading && (
         <div className="loader">
           <Loading />

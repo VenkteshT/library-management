@@ -40,20 +40,20 @@ function App() {
       });
   };
   return (
-    <div className="px-2">
+    <div className="bg-light">
       <ToastContainer />
       {loading && (
         <div className="loader">
           <Loading />
         </div>
       )}
-      <Navbar bg="light" id="navbar" expand="lg">
+      <Navbar bg="success" id="navbar" expand="lg">
         <Navbar.Brand as={Link} to="/" className="ms-2">
           Library Management
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto ms-4">
+          <Nav className="me-auto ms-4 fw-bold">
             <Nav.Link as={Link} to="/">
               Books
             </Nav.Link>

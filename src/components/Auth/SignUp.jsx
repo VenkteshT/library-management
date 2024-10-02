@@ -52,7 +52,7 @@ export default function Signup() {
     if (currentUser) navigate("/");
   }, [currentUser]);
   return (
-    <div className="container-sm" id="login-container">
+    <div className="container-sm shadow-sm border" id="login-container">
       {loading && (
         <div className="loader">
           <Loading />
@@ -89,13 +89,17 @@ export default function Signup() {
             alignItems: "center",
           }}
         >
-          <Button variant="primary" type="submit" className="mt-3 w-100">
+          <Button
+            variant="primary"
+            type="submit"
+            className="mt-3 w-100 fw-normal"
+          >
             SignUp
           </Button>
           <Button
             variant="danger"
             onClick={handleGoogleLogin}
-            className="mt-3 w-100"
+            className="mt-3 w-100 fs-6"
           >
             Continue with Google
           </Button>

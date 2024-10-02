@@ -181,7 +181,7 @@ const BooksList = () => {
             const isAdded = bookInCart(book.id);
             return (
               <Col key={book.id} sm={12} md={6} lg={4} className="mb-4">
-                <Card className="shadow-sm">
+                <Card className="shadow-sm border-success">
                   <Card.Body>
                     <div className="bg-success text-white p-2 rounded">
                       <Card.Title className="text-truncate">
