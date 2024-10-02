@@ -100,6 +100,7 @@ export default function SearchBar({ onSearch, clearResults }) {
             className="clear input-group-text"
             onClick={() => {
               setSearchTerm("");
+              setSuggestions([]);
               clearResults();
             }}
           >
