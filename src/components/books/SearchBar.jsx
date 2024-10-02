@@ -114,7 +114,7 @@ export default function SearchBar({ onSearch, clearResults }) {
       {suggestions.length > 0 && (
         <ul
           className="suggestions list-group position-absolute w-100 mt-2"
-          style={{ zIndex: 1000 }}
+          style={{ zIndex: 1000, overflowY: "scroll", height: "400px" }}
         >
           {suggestions.map((el) => {
             return (
