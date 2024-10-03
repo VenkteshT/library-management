@@ -47,8 +47,11 @@ const BooksList = () => {
 
   const loadBooks = async () => {
     setLoading(true);
+    let data;
     try {
-      const data = await fetchBooks("");
+      if (localStorage.getItem("books")) {
+        data = JSON.parse(localStorage.getItem("books"));
+      } else data = await fetchBooks("");
       let fetchedBooks = data;
 
       setTotalBooks(data && data.length);
@@ -102,6 +105,7 @@ const BooksList = () => {
       });
 
       handleUpdateBooks(enhancedBooks);
+      localStorage.setItem("books", JSON.stringify(enhancedBooks));
       if (enhancedBooks.length === 0 || books.length >= data.numFound) {
         setHasMore(false);
       }

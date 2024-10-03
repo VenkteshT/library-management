@@ -23,7 +23,6 @@ function App() {
     if (!currentUser) navigate("/login");
   }, [currentUser]);
 
-  useEffect(() => {}, []);
   const handleSignOut = () => {
     setLoading(true);
     signOut(auth)

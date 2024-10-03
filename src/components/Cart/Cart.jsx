@@ -16,13 +16,13 @@ const Cart = () => {
   }, []);
 
   const handleCheckout = () => {
-    cart.forEach((book) => {
-      // Update book copies
-      book.copies -= 1;
-      if (book.copies === 0) {
-        book.availability = false;
-      }
+    let books = JSON.parse(localStorage.getItem("books"));
+    books.forEach((book) => {
+      const inCart = cart.find((el) => el.id === book.id);
+      if (inCart) book.copies -= 1;
+      if (book.copies === 0) book.availability = false;
     });
+    localStorage.setItem("books", JSON.stringify(books));
     clearCart();
     toast("Checkout successful!", { type: "info", autoClose: 1100 });
   };
