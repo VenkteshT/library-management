@@ -4,21 +4,24 @@ import { fetchBooks } from "../../services/bookService";
 import "./searchbar.css";
 import { BooksContext } from "../../contexts/BooksContext";
 export default function SearchBar({ onSearch, clearResults }) {
+  //
+  let timerId;
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const { books } = useContext(BooksContext);
-  function debounce(func, delay) {
-    let timeoutId;
-    return (...args) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        func.apply(this, args);
-      }, delay);
-    };
-  }
+
+  // function debounce(func, delay) {
+  //   let timeoutId;
+  //   return (...args) => {
+  //     if (timeoutId) {
+  //       clearTimeout(timeoutId);
+  //     }
+  //     timeoutId = setTimeout(() => {
+  //       func.apply(this, args);
+  //     }, delay);
+  //   };
+  // }
 
   // ------------- api having an issue with query params so implementing manual search functionality ---------
 
@@ -82,8 +85,12 @@ export default function SearchBar({ onSearch, clearResults }) {
 
   const handleChange = (e) => {
     const { value } = e.target;
-    getSuggestions(value);
     setSearchTerm(value);
+
+    if (timerId) clearTimeout(timerId);
+    timerId = setTimeout(() => {
+      getSuggestions(value);
+    }, 350);
   };
   return (
     <Form onSubmit={handleSubmit} className="position-relative shadow-sm">
