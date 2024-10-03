@@ -9,6 +9,8 @@ import { CartContext } from "../../contexts/CartContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksContext.jsx";
+
+const LOCAL_KEY = `books`;
 const BooksList = () => {
   const { addToCart, cart, removeFromCart } = useContext(CartContext);
   const { books, handleUpdateBooks } = useContext(BooksContext);
@@ -49,8 +51,9 @@ const BooksList = () => {
     setLoading(true);
     let data;
     try {
-      if (localStorage.getItem("books")) {
-        data = JSON.parse(localStorage.getItem("books"));
+      const isBooksPresent = localStorage.getItem(LOCAL_KEY);
+      if (isBooksPresent) {
+        data = JSON.parse(localStorage.getItem(LOCAL_KEY));
       } else data = await fetchBooks("");
       let fetchedBooks = data;
 
@@ -95,17 +98,20 @@ const BooksList = () => {
       }
 
       // Enhance books with availability
-      const enhancedBooks = fetchedBooks.map((book) => {
-        let availability = Math.random() > 0.3;
-        return {
-          ...book,
-          availability,
-          copies: !availability ? 0 : Math.floor(Math.random() * 5) + 1,
-        };
-      });
+      let enhancedBooks = fetchedBooks;
+      if (!isBooksPresent) {
+        enhancedBooks = fetchedBooks.map((book) => {
+          let availability = Math.random() > 0.3;
+          return {
+            ...book,
+            availability,
+            copies: !availability ? 0 : Math.floor(Math.random() * 5) + 1,
+          };
+        });
+      }
 
       handleUpdateBooks(enhancedBooks);
-      localStorage.setItem("books", JSON.stringify(enhancedBooks));
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(enhancedBooks));
       if (enhancedBooks.length === 0 || books.length >= data.numFound) {
         setHasMore(false);
       }
@@ -205,7 +211,7 @@ const BooksList = () => {
                     </div>
                     <Card.Text className="mt-4 ps-1">
                       <span className="text-muted">Subject:&nbsp;</span>
-                      {book.description || "N/A"}
+                      <span>{book.description || "N/A"}</span>
                       <br />
                       <span className="text-muted">Published:&nbsp;</span>{" "}
                       {book.publication_year || "N/A"}
@@ -222,7 +228,15 @@ const BooksList = () => {
                           })}
                         </Card.Text>
                         <span className="text-muted">Availability:&nbsp;</span>
-                        {book.availability ? "Available" : "Unavailable"}
+                        {book.availability ? (
+                          <span className="fw-bold text-primary">
+                            Available
+                          </span>
+                        ) : (
+                          <span className="fw-bold text-danger">
+                            Unavailable
+                          </span>
+                        )}
                         <br />
                         <span className="text-muted">Copies:&nbsp;</span>
                         {book.copies}
