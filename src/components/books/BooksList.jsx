@@ -112,11 +112,15 @@ const BooksList = () => {
 
       handleUpdateBooks(enhancedBooks);
       localStorage.setItem(LOCAL_KEY, JSON.stringify(enhancedBooks));
-      if (enhancedBooks.length === 0 || books.length >= data.numFound) {
-        setHasMore(false);
-      }
-      setPage(page + 1);
+      setHasMore(false);
+
+      // since we are using localstorage to retrive the data so i'm skipping the infinite scroll load books part due to api query issue
+      // if (enhancedBooks.length === 0) {
+      //   setHasMore(false);
+      // }
+      // setPage(page + 1);
     } catch (error) {
+      setHasMore(false);
       console.error(error);
     } finally {
       setLoading(false);
@@ -188,7 +192,7 @@ const BooksList = () => {
       </div>
       <InfiniteScroll
         style={{ overflow: "hidden" }}
-        dataLength={books.length}
+        dataLength={allBooks.length}
         next={loadBooks}
         hasMore={hasMore}
         loader={<Loading />}
