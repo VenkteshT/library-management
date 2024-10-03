@@ -54,19 +54,30 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto ms-4 fw-bold">
-            <Nav.Link as={Link} to="/">
-              Books
-            </Nav.Link>
-            <Nav.Link as={Link} to="/cart" style={{ position: "relative" }}>
-              Cart{" "}
-              {currentUser && cart.length ? (
-                <div id="cart-count" className="rounded-circle bg-success">
-                  {cart.length}
-                </div>
-              ) : (
-                <></>
-              )}
-            </Nav.Link>
+            {currentUser ? (
+              <Nav.Link as={Link} to="/">
+                Books
+              </Nav.Link>
+            ) : (
+              <></>
+            )}
+            {currentUser ? (
+              <Nav.Link as={Link} to="/cart" style={{ position: "relative" }}>
+                Cart
+                {currentUser && cart.length ? (
+                  <div
+                    id="cart-count"
+                    className="rounded-circle border bg-success  text-black border-black"
+                  >
+                    {cart.length}
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </Nav.Link>
+            ) : (
+              <></>
+            )}
           </Nav>
           <Nav className="ms-4">
             {currentUser ? (

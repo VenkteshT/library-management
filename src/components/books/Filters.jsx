@@ -28,6 +28,7 @@ const Filters = ({ filters, setFilters, applyFilter, clearFilter }) => {
       return true;
     });
     setIsFiltersEmpty(isEmpty);
+    if (isEmpty) setIsFilterApplied(false);
   }, [filters]);
 
   return (

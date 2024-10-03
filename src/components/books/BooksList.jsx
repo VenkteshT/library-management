@@ -14,6 +14,7 @@ const BooksList = () => {
   const { books, handleUpdateBooks } = useContext(BooksContext);
   const { currentUser } = useContext(AuthContext);
   const [allBooks, setAllBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [search, setSearch] = useState("");
@@ -43,7 +44,9 @@ const BooksList = () => {
       sortOrder: "asc",
     });
   };
+
   const loadBooks = async () => {
+    setLoading(true);
     try {
       const data = await fetchBooks("");
       let fetchedBooks = data;
@@ -102,6 +105,8 @@ const BooksList = () => {
       setPage(page + 1);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -166,7 +171,7 @@ const BooksList = () => {
         clearFilter={clearFilter}
       />
       <div className="mb-2 mt-4">
-        <h5>Total Books Found: {allBooks.length}</h5>
+        <h5>Total Books Found: {loading ? "loading..." : allBooks.length}</h5>
       </div>
       <InfiniteScroll
         style={{ overflow: "hidden" }}
