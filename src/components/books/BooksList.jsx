@@ -170,6 +170,7 @@ const BooksList = () => {
     });
 
     if (isEmpty) {
+      localStorage.setItem(LOCAL_KEY, "");
       loadBooks();
     }
   }, [filters]);
