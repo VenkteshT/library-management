@@ -156,10 +156,12 @@ const BooksList = () => {
   }, [search]);
 
   const applyFilter = () => {
+    localStorage.setItem("originalBooks", localStorage.getItem(LOCAL_KEY));
     loadBooks();
   };
 
   const clearFilter = () => {
+    localStorage.setItem(LOCAL_KEY, localStorage.getItem("originalBooks"));
     resetFilter();
   };
 
@@ -170,7 +172,6 @@ const BooksList = () => {
     });
 
     if (isEmpty) {
-      localStorage.setItem(LOCAL_KEY, "");
       loadBooks();
     }
   }, [filters]);
